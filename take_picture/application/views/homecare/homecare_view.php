@@ -72,6 +72,7 @@
             </div>
         </section>
     </main>
+    <?php $this->load->view('footer'); ?>
     <?php $this->load->view('homecare/housecare_add_modal'); ?>
     <?php $this->load->view('homecare/homecare_end_modal'); ?>
     <script>

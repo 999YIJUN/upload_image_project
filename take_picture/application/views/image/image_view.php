@@ -101,6 +101,7 @@
             <?php endif; ?>
         </div>
     </main>
+    <?php $this->load->view('footer'); ?>
     <script>
         $(function() {
             $('.image_delete').on('click', function() {

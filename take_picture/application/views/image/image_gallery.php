@@ -48,6 +48,7 @@
             <?php endforeach; ?>
         </div>
     </main>
+    <?php $this->load->view('footer'); ?>
     <script>
         $(function() {
             $('.btnData').on('click', function() {

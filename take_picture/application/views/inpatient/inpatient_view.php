@@ -62,6 +62,7 @@
             </div>
         </section>
     </main>
+    <?php $this->load->view('footer'); ?>
     <script>
         $(document).ready(function() {
             var table = $('#datatable').DataTable({
