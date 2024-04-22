@@ -18,7 +18,11 @@ class Surgery extends CI_Controller
     {
         $data['user'] = $this->session->userdata('user');
         $data['today'] = date('Y-m-d');
-        $this->load->view('surgery/surgery_view', $data);
+        if ($data['user']) {
+            $this->load->view('surgery/surgery_view', $data);
+        } else {
+            redirect('user/index');
+        }
     }
 
     // DataTables

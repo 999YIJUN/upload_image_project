@@ -17,7 +17,11 @@ class User extends CI_Controller
     public function user_view()
     {
         $data['user'] = $this->session->userdata('user');
-        $this->load->view('users/user_view', $data);
+        if ($data['user']) {
+            $this->load->view('users/user_view', $data);
+        } else {
+            redirect('user/index');
+        }
     }
 
     // 登入
@@ -90,19 +94,32 @@ class User extends CI_Controller
                 'password_confirm' => form_error('password_confirm'),
             );
         } else {
+            $account = $this->input->post('account');
+            $user = $this->user_model->get_user_by_account($account);
             $response['success'] = true;
             $response['errors'] = array(
                 'password_confirm' => '',
             );
-            $user_data = [
-                "username" => $this->input->post('username'),
-                'account' => $this->input->post('account'),
-                // password_hash 字串長度為60
-                "password" => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                "title" => $this->input->post('title')
-            ];
-
-            $this->user_model->insert_user($user_data);
+            // 檢查帳號是否已存在
+            if ($user) {
+                $response['success'] = false;
+                $response['errors'] = [
+                    'account' =>   '此帳號已存在',
+                    'username' => '',
+                    'title' => '',
+                    'password' => '',
+                    'password_confirm' => '',
+                ];
+            } else {
+                $user_data = [
+                    "username" => $this->input->post('username'),
+                    'account' => $this->input->post('account'),
+                    // password_hash 字串長度為60
+                    "password" => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                    "title" => $this->input->post('title')
+                ];
+                $this->user_model->insert_user($user_data);
+            }
         }
 
         echo json_encode($response);

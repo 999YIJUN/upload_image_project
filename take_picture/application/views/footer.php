@@ -24,7 +24,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; Copyright <strong><span>Gary Xue</span></strong>. All Rights Reserved
+                    &copy; Copyright <strong><span>衛生福利部豐原醫院</span></strong>. All Rights Reserved
                 </div>
             </div>
         </div>

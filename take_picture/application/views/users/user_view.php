@@ -9,17 +9,6 @@
         .dataTables_filter {
             display: none;
         }
-
-        .footer {
-            border-top: 1px solid #cddfff;
-            /* position: fixed;
-            bottom: 0;
-            width: 100%; */
-            /* background-color: #333; */
-            text-align: center;
-            color: #012970;
-            padding: 20px 0;
-        }
     </style>
 </head>
 
@@ -78,16 +67,7 @@
             </div>
         </section>
     </main>
-    <footer class="footer" id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    &copy; Copyright <strong><span>Gary Xue</span></strong>. All Rights Reserved
-                </div>
-            </div>
-        </div>
-    </footer>
-
+    <?php $this->load->view('footer'); ?>
     <?php $this->load->view('users/user_add_modal'); ?>
 
     <script>
@@ -105,11 +85,12 @@
                 ],
                 "searching": true,
                 "responsive": true,
+                // "info": false,
                 "ajax": {
                     "url": "<?php echo site_url('user/get_data_user'); ?>",
                 },
                 "language": {
-                    "url": "<?php echo base_url('wwwroot/js/Chinese-traditional.json'); ?>"
+                    "url": "<?php echo base_url('wwwroot/js/Chinese-traditional.json'); ?>",
                 },
                 "responsive": {
                     breakpoints: [{
@@ -167,6 +148,7 @@
                 titleVal = $(this).val();
                 if (titleVal == '全部') {
                     table.column('#col_job_title').search('').draw();
+
                 } else {
                     table.column('#col_job_title').search(titleVal).draw();
                 }
@@ -203,6 +185,7 @@
                     }
                 });
             });
+
             $('#datatable').on('click', '.btnEdit', function() {
                 let user_id = $(this).data('user_id');
                 $.ajax({

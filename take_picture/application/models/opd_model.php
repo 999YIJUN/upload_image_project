@@ -21,6 +21,14 @@ class opd_model extends CI_Model
         return $query->row();
     }
 
+    public function get_unique_department()
+    {
+        $this->db->distinct();
+        $this->db->select('department');
+        $query = $this->db->get('opd');
+        return $query->result();
+    }
+
     public function insert_opd($data)
     {
         $this->db->insert('opd', $data);

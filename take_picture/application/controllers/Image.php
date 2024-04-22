@@ -97,7 +97,11 @@ class Image extends CI_Controller
     {
         $data['user'] = $this->session->userdata('user');
         $data['record_numbers'] = $this->image_model->get_unique_record_numbers();
-        $this->load->view('image/image_gallery', $data);
+        if ($data['user']) {
+            $this->load->view('image/image_gallery', $data);
+        } else {
+            redirect('user/index');
+        }
     }
 
     public function image_data()
@@ -108,12 +112,6 @@ class Image extends CI_Controller
         $this->session->set_userdata('record_number', $record_number);
         $response['success'] = true;
         echo json_encode($response);
-    }
-
-    public function reset()
-    {
-        // $this->session->unset_userdata('picture');
-        redirect('opd/card');
     }
 
     public function delete_image()

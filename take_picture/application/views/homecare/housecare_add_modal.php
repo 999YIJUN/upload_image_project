@@ -162,9 +162,9 @@
                                 if (recordNumber) {
                                     $('#personal_id').val(patientData.personal_id);
                                 }
-                                $('#patient_name').val(patientData.patient_name);
+                                $('#patient_name').val(patientData.patient_name); // TODO: EDIT
                                 $('#birthday').val(patientData.birthday);
-                                if (patientData.gender == 'male') {
+                                if (patientData.gender == 'male') { // TODO: EDIT
                                     $('#gender').val('男');
                                 } else if (patientData.gender == 'female') {
                                     $('#gender').val('女');

@@ -18,7 +18,11 @@ class Homecare extends CI_Controller
     {
         $data['home_care'] = $this->homecare_model->get_care_center();
         $data['user'] = $this->session->userdata('user');
-        $this->load->view('homecare/homecare_view', $data);
+        if ($data['user']) {
+            $this->load->view('homecare/homecare_view', $data);
+        } else {
+            redirect('user/index');
+        }
     }
 
     // 新增
@@ -48,12 +52,14 @@ class Homecare extends CI_Controller
         } else {
             $response['success'] = true;
             $patient_data = $this->session->userdata('patient_data');
+            // $gender = ($patient_data->gender == 'M') ? 'male' : 'female'; // TODO: EDIT
             $user_data = [
                 "personal_id" => $patient_data->personal_id,
                 'record_number' => $patient_data->record_number,
                 'patient_name' => $patient_data->patient_name,
                 'birthday' => $patient_data->birthday,
                 'gender' => $patient_data->gender,
+                // 'gender' => $gender, // TODO: EDIT
                 'start_date' => $this->input->post('start_date'),
                 "care_center" => $this->input->post('care_center'),
                 'age' => $patient_data->age,
@@ -101,10 +107,14 @@ class Homecare extends CI_Controller
 
     public function get_patient_data()
     {
+        $this->load->model('test_patient_model');
+
         $personal_id = $this->input->post('personalId');
         $record_number = $this->input->post('recordNumber');
-        $patientData_by_personal_id = $this->homecare_model->get_patient_by_personal_id($personal_id);
-        $patientData_by_record_number = $this->homecare_model->get_patient_by_record_number($record_number);
+        // $patientData_by_personal_id = $this->homecare_model->get_patient_by_personal_id($personal_id);
+        // $patientData_by_record_number = $this->homecare_model->get_patient_by_record_number($record_number);
+        $patientData_by_personal_id = $this->test_patient_model->get_patient_by_personal_id($personal_id);
+        $patientData_by_record_number = $this->test_patient_model->get_patient_by_record_number($record_number);
 
         if ($patientData_by_personal_id || $patientData_by_record_number) {
             if ($patientData_by_personal_id) {
@@ -123,10 +133,22 @@ class Homecare extends CI_Controller
             }
 
             if ($success) {
+                function process_patient_data($patientData)
+                {
+                    $patientData->patient_name = $patientData->p_name; // TODO: EDIT
+                    unset($patientData->p_name);
+                    if ($patientData->gender == 'M') {
+                        $patientData->gender = 'male';
+                    } elseif ($patientData->gender == 'F') {
+                        $patientData->gender = 'female';
+                    }
+                    return $patientData;
+                }
+
                 if ($patientData_by_personal_id) {
-                    $patientData = $patientData_by_personal_id;
+                    $patientData = process_patient_data($patientData_by_personal_id);
                 } else {
-                    $patientData = $patientData_by_record_number;
+                    $patientData = process_patient_data($patientData_by_record_number);
                 }
                 $response = [
                     'success' => true,

@@ -5,9 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <style>
         .card_personal {
             display: none;
+        }
+
+        .card-text {
+            font-size: 18px;
+            font-weight: 400;
         }
     </style>
 </head>
@@ -31,13 +37,13 @@
             </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
             <?php foreach ($record_numbers as $record_number) : ?>
                 <div class="col">
                     <div class="card mb-2">
                         <div class="card-body">
-                            <h5 class="card-title text-center"><?= $record_number->record_number; ?></h5>
-                            <p class="card-text text-center"><?= $record_number->patient_name; ?></p>
+                            <p class="card-title text-center"><?= $record_number->patient_name; ?></p>
+                            <p class="card-text text-center text-secondary"><?= $record_number->record_number; ?></p>
                             <p class="card_personal"><?= $record_number->personal_id; ?></p>
                             <div class="d-flex justify-content-center">
                                 <button class="btn btn-primary btnData" data-record_number="<?= $record_number->record_number; ?>">詳細資訊</button>
@@ -79,7 +85,7 @@
                     cards.show();
                 } else {
                     cards.each(function() {
-                        var recordNumberText = $(this).find('.card-title').text();
+                        var recordNumberText = $(this).find('.card-text').text();
                         var personalIDText = $(this).find('.card_personal').text();
                         if (recordNumberText === searchValue || personalIDText === searchValue) {
                             $(this).show();

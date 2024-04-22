@@ -34,9 +34,9 @@
                 <!-- <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4"> -->
                 <div class="card border border-light-subtle rounded-3 shadow-sm">
                     <div class="row g-0">
-                        <div class="col-md-5 d-flex align-items-center pt-3">
+                        <div class="col-md-5 d-flex align-items-center pt-3 justify-content-center">
                             <div class="text-center">
-                                <img src="<?= base_url('wwwroot/test_picture.jpg') ?>" class="img-fluid mx-auto d-block">
+                                <img src="<?= base_url('wwwroot/logo.png') ?>" class="img-fluid mx-auto d-block">
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -98,7 +98,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; Copyright <strong><span>Gary Xue</span></strong>. All Rights Reserved
+                    &copy; Copyright <strong><span>衛生福利部豐原醫院</span></strong>. All Rights Reserved
                 </div>
             </div>
         </div>

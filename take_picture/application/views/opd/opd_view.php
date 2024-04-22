@@ -38,6 +38,23 @@
                     <span class="input-group-text" id="date_clear" data-toggle="tooltip"><i class="bi bi-x-lg" style="color: #f64747;"></i></span>
                 </div>
             </div>
+            <div class="col-sm-3">
+                <label class="form-label">午別:</label>
+                <select name="category_select" id="category_select" class="form-select">
+                    <option value="all">全日</option>
+                    <option value="morning">上午</option>
+                    <option value="afternoon">下午</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <label class="form-label">科別:</label>
+                <select name="department_select" id="department_select" class="form-select">
+                    <option value="all">全部</option>
+                    <?php foreach ($department as $d) : ?>
+                        <option value="<?= $d->department ?>"><?= $d->department ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
             <div class="col-sm-4">
                 <label class="form-label">醫師</label>
                 <input type="text" id="doctor" class="form-control" value="<?php if ($user->title === '醫師') : ?><?= $user->username; ?><?php endif; ?>">
@@ -59,6 +76,8 @@
                                         <th id="col_record_no">病歷號</th>
                                         <th>姓名</th>
                                         <th id="col_date">日期</th>
+                                        <th id="col_category">午別</th>
+                                        <th id="col_department">科別</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -94,11 +113,11 @@
                     "url": "<?php echo base_url('wwwroot/js/Chinese-traditional.json'); ?>"
                 },
                 "columnDefs": [{
-                        "targets": 3,
+                        "targets": [3, 4],
                         "visible": false
                     },
                     {
-                        "targets": 4,
+                        "targets": 6,
                         "responsivePriority": 1,
                     },
                     {
@@ -125,18 +144,26 @@
             let doctorVal = $('#doctor').val();
             let dateVal = $('#date').val();
             let recordVal = $('#record_no').val();
+            let categoryVal = $(`select[name='category_select']`).val();
+            let departmentVal = $(`select[name='department_select']`).val();
 
-            if (dateVal) {
+            if (dateVal && categoryVal != 'all') {
                 table.column('#col_date').search(dateVal, true).draw();
+                table.column('#col_category').search(categoryVal).draw();
                 if (doctorVal) {
                     table.column('#col_doctor').search(doctorVal).draw();
                 }
+                if (departmentVal != 'all') {
+                    table.column('#col_department').search(departmentVal).draw();
+                }
+            } else if (dateVal && categoryVal == 'all' && departmentVal == 'all') {
+                table.column('#col_date').search(dateVal, true).draw();
+                table.column('#col_doctor').search(doctorVal).draw();
             }
 
             $('#date').on('change', function() {
                 dateVal = $(this).val();
                 table.column('#col_date').search(dateVal, true).draw();
-
             })
 
             $('#doctor').on('change', function() {
@@ -149,6 +176,29 @@
                 recordVal = $(this).val();
                 table.column('#col_record_no').search(recordVal).draw();
 
+            })
+
+            $('#category_select').on('change', function() {
+                categoryVal = $(this).val();
+                // table.column('#col_category').search(categoryVal).draw();
+                if (categoryVal == 'all') {
+                    table.column('#col_category').search('').draw();
+
+                } else {
+                    table.column('#col_category').search(categoryVal).draw();
+                }
+            })
+
+            $('#department_select').on('change', function() {
+                departmentVal = $(this).val();
+                console.log(departmentVal);
+                // table.column('#col_category').search(categoryVal).draw();
+                if (departmentVal == 'all') {
+                    table.column('#col_department').search('').draw();
+
+                } else {
+                    table.column('#col_department').search(departmentVal).draw();
+                }
             })
             // end filter
 

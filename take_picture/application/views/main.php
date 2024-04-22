@@ -16,7 +16,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <div href="" class="logo d-flex align-items-center">
-                <img src="" alt="">
+                <img src="<?= base_url('wwwroot/small_logo.png') ?>" alt="">
                 <span class="d-none d-lg-block">拍照上傳系統</span>
             </div>
             <i class="bi bi-list toggle-sidebar-btn"></i>

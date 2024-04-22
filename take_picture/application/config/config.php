@@ -23,8 +23,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://127.0.0.1/take_picture/';
-
+// $config['base_url'] = 'http://127.0.0.1/take_picture/';
+$hostname = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : '';
+$config['base_url'] = "https://{$hostname}/take_picture/";
 /*
 |--------------------------------------------------------------------------
 | Index File

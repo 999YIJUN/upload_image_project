@@ -17,8 +17,13 @@ class Opd extends CI_Controller
     public function opd_view()
     {
         $data['user'] = $this->session->userdata('user');
+        $data['department'] = $this->opd_model->get_unique_department();
         $data['today'] = date('Y-m-d');
-        $this->load->view('opd/opd_view', $data);
+        if ($data['user']) {
+            $this->load->view('opd/opd_view', $data);
+        } else {
+            redirect('user/index');
+        }
     }
 
     public function patient_data()
@@ -62,8 +67,14 @@ class Opd extends CI_Controller
                 'db' => 'date', 'dt' => 3
             ),
             array(
+                'db' => 'category', 'dt' => 4
+            ),
+            array(
+                'db' => 'department', 'dt' => 5
+            ),
+            array(
                 'db' => 'opd_id',
-                'dt' => 4,
+                'dt' => 6,
                 'formatter' => function ($data, $row) {
                     return '<button class="btn btn-sm btn-warning btnTakePicture" data-record_number="' . $row['record_number'] . '">圖片上傳</button>';
                 }

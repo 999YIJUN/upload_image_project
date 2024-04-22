@@ -17,7 +17,11 @@ class Inpatient extends CI_Controller
     public function inpatient_view()
     {
         $data['user'] = $this->session->userdata('user');
-        $this->load->view('inpatient/inpatient_view', $data);
+        if ($data['user']) {
+            $this->load->view('inpatient/inpatient_view', $data);
+        } else {
+            redirect('user/index');
+        }
     }
 
     public function patient_data()
